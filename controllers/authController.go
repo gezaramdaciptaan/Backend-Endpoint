@@ -95,7 +95,11 @@ func User(c *fiber.Ctx) error {
 		splitToken = strings.Split(tokenHeader, "Bearer ")
 	}
 
-	tokenJwt := splitToken[1]
+	var tokenJwt string
+
+	if splitToken != nil {
+		tokenJwt = splitToken[1]
+	}
 
 	token, err := jwt.ParseWithClaims(tokenJwt, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
